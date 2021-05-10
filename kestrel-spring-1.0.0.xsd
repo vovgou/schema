@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.vovgou.com/schema/kestrel"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	targetNamespace="http://www.vovgou.com/schema/kestrel"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="1.0.0">
+
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xsd:import
+		namespace="http://www.springframework.org/schema/beans"
+		schemaLocation="https://www.springframework.org/schema/beans/spring-beans.xsd" />
+
+	<xsd:annotation>
+		<xsd:documentation>			
+        	<![CDATA[
+        		Kestrel Framework XML Schema
+				version 1.0.0
+				Authors: Clark
+	
+                This is the XML Schema for the Kestrel Framework development descriptor,
+                it's used as a qualified namespace in the Spring configuration namespace.
+                The "kt" is the recommended namespace prefix.
+                For example,
+
+                <beans xmlns:kt="http://www.vovgou.com/schema/kestrel">
+            ]]>
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:complexType name="moduleType">
+		<xsd:sequence>
+			<xsd:element name="resolvers" type="resolversType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="interceptors" type="interceptorsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="action" type="actionType"
+					minOccurs="0" maxOccurs="unbounded" />
+				<xsd:any namespace="##other" processContents="strict" />
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:ID" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The unique identifier for a bean. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="parent" type="xsd:string"
+			use="optional">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The ID of the module's parent. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="namespace" type="xsd:string"
+			use="optional">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The namespace of the module. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="interceptorsType">
+		<xsd:sequence>
+			<xsd:element name="interceptor" type="interceptorType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="interceptorType">
+		<xsd:sequence>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="include"
+					type="interceptorMappingType" />
+				<xsd:element name="exclude"
+					type="interceptorMappingType" />
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="ref" type="xsd:NCName"
+			use="required" />
+		<xsd:attribute name="order" type="xsd:int"
+			use="optional">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The order of the interceptor. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="resolversType">
+		<xsd:sequence>
+			<xsd:element name="resolver" type="resolverType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="resolverType">
+		<xsd:attribute name="ref" type="xsd:NCName"
+			use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="interceptorMappingType">
+		<xsd:attribute name="path" type="xsd:string"
+			use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The path of the mapping. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="actionType">
+		<xsd:sequence>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="mapping" type="actionMappingType" />
+				<xsd:any namespace="##other" processContents="strict"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="ref" type="xsd:NCName" />
+	</xsd:complexType>
+
+	<xsd:complexType name="actionMappingType">
+		<xsd:attribute name="path" type="xsd:string"
+			use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The path of the action. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="method" type="xsd:string"
+			use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The method of the action. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="module" type="moduleType" />
+
+</xsd:schema>
