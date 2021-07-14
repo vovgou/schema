@@ -61,6 +61,18 @@
 
 	<xsd:complexType name="ActionType">
 		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="beans:bean">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ The action's bean definition.]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="beans:ref">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[A reference to an action bean.]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element name="mapping" minOccurs="1"
 				maxOccurs="unbounded">
 				<xsd:complexType>
@@ -84,18 +96,6 @@
 					</xsd:attribute>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:choice>
-				<xsd:element ref="beans:bean">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[ The action's bean definition.]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:element>
-				<xsd:element ref="beans:ref">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[A reference to an action bean.]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:element>
-			</xsd:choice>
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -125,6 +125,22 @@
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:sequence>
+						<xsd:choice>
+							<xsd:element ref="beans:bean">
+								<xsd:annotation>
+									<xsd:documentation><![CDATA[
+		The interceptor's bean definition.
+										]]></xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element ref="beans:ref">
+								<xsd:annotation>
+									<xsd:documentation><![CDATA[
+		A reference to an interceptor bean.
+										]]></xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:choice>
 						<xsd:element name="mapping" maxOccurs="unbounded">
 							<xsd:complexType>
 								<xsd:attribute name="path" type="xsd:string"
@@ -152,22 +168,6 @@
 								</xsd:attribute>
 							</xsd:complexType>
 						</xsd:element>
-						<xsd:choice>
-							<xsd:element ref="beans:bean">
-								<xsd:annotation>
-									<xsd:documentation><![CDATA[
-		The interceptor's bean definition.
-										]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element ref="beans:ref">
-								<xsd:annotation>
-									<xsd:documentation><![CDATA[
-		A reference to an interceptor bean.
-										]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-						</xsd:choice>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
