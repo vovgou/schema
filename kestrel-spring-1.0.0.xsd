@@ -31,6 +31,8 @@
 	<xsd:element name="module">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="argument-resolver"
+					type="ArgumentResolverType" minOccurs="0" maxOccurs="1" />
 				<xsd:element name="interceptors" type="InterceptorsType"
 					minOccurs="0" maxOccurs="1" />
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
@@ -58,6 +60,23 @@
 			</xsd:attribute>
 		</xsd:complexType>
 	</xsd:element>
+
+	<xsd:complexType name="ArgumentResolverType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="beans:bean">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ The argument resolver's bean definition.]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="beans:ref">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[A reference to an argument resolver factory bean.]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
 
 	<xsd:complexType name="ActionType">
 		<xsd:sequence>
@@ -141,7 +160,8 @@
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:choice>
-						<xsd:element name="mapping" maxOccurs="unbounded">
+						<xsd:element name="mapping" minOccurs="0"
+							maxOccurs="unbounded">
 							<xsd:complexType>
 								<xsd:attribute name="path" type="xsd:string"
 									use="required">
@@ -172,11 +192,9 @@
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:choice>
+		<!-- <xsd:attribute name="inherit" type="beans:defaultable-boolean" default="true"> 
+			<xsd:annotation> <xsd:documentation><![CDATA[ Whether to inherit interceptors 
+			from parent module. ]]></xsd:documentation> </xsd:annotation> </xsd:attribute> -->
 	</xsd:complexType>
-
-
-
-
-
 
 </xsd:schema>
